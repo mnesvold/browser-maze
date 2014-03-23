@@ -7,17 +7,17 @@ define [
     'util/random'
     'util/queuetask'
     'util/pointerlock'
-    'input/keyboard'
-], (World, Floor, Camera, Wall, ViewVisitor, Random, queueTask, PointerLock, KeyboardInput) ->
+    'input/inputvisitor'
+], (World, Floor, Camera, Wall, ViewVisitor, Random, queueTask, PointerLock, InputVisitor) ->
     class Game
         constructor: ->
             self = @
-            @keyboard = new KeyboardInput document
             @world = new World()
             @world.add new Floor 10, 10
             @camera = new Camera 5, 0.5, 5
             @world.add @camera
             @viewVisitor = new ViewVisitor @world
+            @inputVisitor = new InputVisitor document
 
             @_placeWalls()
 
@@ -59,16 +59,5 @@ define [
             draw()
 
         tickPhysics: ->
-            if @keyboard.isActive KeyboardInput.constants.UP
-                @camera.pitch -= 0.01
-            if @keyboard.isActive KeyboardInput.constants.DOWN
-                @camera.pitch += 0.01
-            if @keyboard.isActive KeyboardInput.semantic.FORWARD
-                @camera.moveForward()
-            if @keyboard.isActive KeyboardInput.semantic.BACKWARD
-                @camera.moveBackward()
-            if @keyboard.isActive KeyboardInput.semantic.STRAFE_LEFT
-                @camera.moveLeft()
-            if @keyboard.isActive KeyboardInput.semantic.STRAFE_RIGHT
-                @camera.moveRight()
+            @world.visit @inputVisitor
 
