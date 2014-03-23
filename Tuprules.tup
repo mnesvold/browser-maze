@@ -1,0 +1,4 @@
+BIN = $(TUP_CWD)/node_modules/.bin
+COFFEE = $(BIN)/coffee
+
+!coffee = |> $(COFFEE) -c -m %f |> %B.js | %B.map

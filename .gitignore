@@ -1,0 +1,7 @@
+*~
+.tup
+scripts/**/*.js
+scripts/**/*.map
+!scripts/**/jquery.js
+!scripts/**/require.js
+!scripts/**/three.js
