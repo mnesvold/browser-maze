@@ -63,5 +63,5 @@ define [
 
         tickPhysics: ->
             @world.visit @inputVisitor
-            @world.visit @physicsVisitor
+            @physicsVisitor.tickPhysics @world
 
