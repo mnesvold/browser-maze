@@ -1,6 +1,6 @@
 define ['util/vector3'], (Vector3) ->
     class Camera
-        constructor: (@x_pos, @y_pos, @z_pos, speedVector, yaw, pitch) ->
+        constructor: (@position, speedVector, yaw, pitch) ->
             @speedVector = speedVector ? new Vector3 .06, 0, .06
             @yaw = yaw ? 0
             @pitch = pitch ? 0
@@ -38,7 +38,5 @@ define ['util/vector3'], (Vector3) ->
             @_move delta
 
         _move: (delta) ->
-            @x_pos += delta.x * @speedVector.x
-            @y_pos += delta.y * @speedVector.y
-            @z_pos += delta.z * @speedVector.z
+            @position.add delta.multiply @speedVector
 

@@ -7,14 +7,15 @@ define [
     'util/random'
     'util/queuetask'
     'util/pointerlock'
+    'util/vector3'
     'input/inputvisitor'
-], (World, Floor, Camera, Wall, ViewVisitor, Random, queueTask, PointerLock, InputVisitor) ->
+], (World, Floor, Camera, Wall, ViewVisitor, Random, queueTask, PointerLock, Vector3, InputVisitor) ->
     class Game
         constructor: ->
             self = @
             @world = new World()
             @world.add new Floor 10, 10
-            @camera = new Camera 5, 0.5, 5
+            @camera = new Camera new Vector3 5, 0.5, 5
             @world.add @camera
             @viewVisitor = new ViewVisitor @world
             @inputVisitor = new InputVisitor document

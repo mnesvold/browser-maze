@@ -64,9 +64,7 @@ define ["three"], (THREE) ->
             @scene.add threeCam
 
         _updateCamera: (camera, threeCam) ->
-            threeCam.position.x = camera.x_pos
-            threeCam.position.y = camera.y_pos
-            threeCam.position.z = camera.z_pos
+            threeCam.position = camera.position
 
             target = camera.getLookVector()
             target.add threeCam.position
