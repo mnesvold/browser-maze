@@ -18,9 +18,9 @@ define [
             @camera = new Camera 5, 0.5, 5
             @world.add @camera
             @viewVisitor = new ViewVisitor @world
-            
+
             @_placeWalls()
-            
+
             canvas = document.getElementsByTagName('canvas')[0]
             canvas.addEventListener 'click', () ->
                 pointerLock = new PointerLock canvas, () ->
@@ -29,11 +29,11 @@ define [
                     deltaY = event.movementY / 100
                     self.camera.yaw += deltaX
                     self.camera.pitch += deltaY
-            
+
             resize = (event) ->
                 self.viewVisitor.handleResize event
             window.addEventListener 'resize', resize
-        
+
         _placeWalls: ->
             random = new Random()
             x = 0
@@ -46,7 +46,7 @@ define [
                     @world.add new Wall x, 0.5, z, random.randomInt 0xffffff
                     z += 1
                 x += 1
-        
+
         launchDrawLoop: ->
             self = @
             tickPhysics = ->
@@ -57,7 +57,7 @@ define [
                 queueTask tickPhysics
                 requestAnimationFrame draw
             draw()
-        
+
         tickPhysics: ->
             if @keyboard.isActive KeyboardInput.constants.UP
                 @camera.pitch -= 0.01

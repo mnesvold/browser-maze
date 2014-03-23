@@ -11,13 +11,13 @@ define [], () ->
         O: 79
         S: 83
         W: 87
-    
+
     QWERTYSemantics =
         FORWARD: k.W
         BACKWARD: k.S
         STRAFE_LEFT: k.A
         STRAFE_RIGHT: k.D
-    
+
     DvorakSemantics =
         FORWARD: k.COMMA
         BACKWARD: k.O
@@ -35,7 +35,7 @@ define [], () ->
                 if log_events
                     console.log " UP  #{event.keyCode}"
                 delete active[event.keyCode]
-        
+
         isActive: (keyCode) ->
             return @active[keyCode]
 

@@ -7,7 +7,7 @@ define ['util/vector3'], (Vector3) ->
 
         accept: (visitor) ->
             visitor.visitCamera this
-        
+
         getLookVector: ->
             target = new Vector3 0, 0, 1
             target.applyEuler new THREE.Euler(
@@ -17,27 +17,28 @@ define ['util/vector3'], (Vector3) ->
                 'YXZ'
             )
             target
-        
+
         moveForward: ->
             delta = @getLookVector()
             @_move delta
-        
+
         moveBackward: ->
             delta = @getLookVector()
             delta.negate()
             @_move delta
-        
+
         moveLeft: ->
             delta = @getLookVector()
             delta.cross new Vector3 0, -1, 0
             @_move delta
-        
+
         moveRight: ->
             delta = @getLookVector()
             delta.cross new Vector3 0, 1, 0
             @_move delta
-        
+
         _move: (delta) ->
             @x_pos += delta.x * @speedVector.x
             @y_pos += delta.y * @speedVector.y
             @z_pos += delta.z * @speedVector.z
+

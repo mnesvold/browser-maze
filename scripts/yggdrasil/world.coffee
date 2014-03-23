@@ -3,7 +3,7 @@ define [], () ->
         constructor: ->
             @objects = []
             @nextID = 1
-        
+
         add: (object) ->
             object.object_id = @_getNextID()
             @objects.push object

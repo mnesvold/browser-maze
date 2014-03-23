@@ -7,25 +7,25 @@ define ["three"], (THREE) ->
             @handleResize()
             document.body.appendChild renderer.domElement
             @viewObjects = {}
-            
+
             scene.add new THREE.AxisHelper 25
-            
+
             light = new THREE.PointLight 0xffffff, 1, 100
             light.position = new THREE.Vector3 5, 10, 5
             scene.add light
-            
+
         update: ->
             @world.visit this
             @draw()
 
         draw: ->
             @renderer.render @scene, @camera
-        
+
         handleResize: (event) ->
             @camera.aspect = window.innerWidth / window.innerHeight
             @camera.updateProjectionMatrix()
             @renderer.setSize window.innerWidth, window.innerHeight
-        
+
         visitFloor: (floor) ->
             if @viewObjects[floor.object_id]?
                 return
@@ -39,7 +39,7 @@ define ["three"], (THREE) ->
             )
             @viewObjects[floor.object_id] = mesh
             @scene.add mesh
-        
+
         visitWall: (wall) ->
             if @viewObjects[wall.object_id]?
                 return
@@ -53,7 +53,7 @@ define ["three"], (THREE) ->
             )
             @viewObjects[wall.object_id] = mesh
             @scene.add mesh
-        
+
         visitCamera: (camera) ->
             if @viewObjects[camera.object_id]?
                 @_updateCamera camera, @viewObjects[camera.object_id]
@@ -67,7 +67,7 @@ define ["three"], (THREE) ->
             threeCam.position.x = camera.x_pos
             threeCam.position.y = camera.y_pos
             threeCam.position.z = camera.z_pos
-            
+
             target = camera.getLookVector()
             target.add threeCam.position
             threeCam.lookAt target
