@@ -1,6 +1,7 @@
 define ['util/vector3'], (Vector3) ->
     class Camera
         constructor: (@position, speedVector, yaw, pitch) ->
+            @velocity = new Vector3 0, 0, 0
             @speedVector = speedVector ? new Vector3 .06, 0, .06
             @yaw = yaw ? 0
             @pitch = pitch ? 0
@@ -38,5 +39,5 @@ define ['util/vector3'], (Vector3) ->
             @_move delta
 
         _move: (delta) ->
-            @position.add delta.multiply @speedVector
+            @velocity.add delta.multiply @speedVector
 

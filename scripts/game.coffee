@@ -9,7 +9,8 @@ define [
     'util/pointerlock'
     'util/vector3'
     'input/inputvisitor'
-], (World, Floor, Camera, Wall, ViewVisitor, Random, queueTask, PointerLock, Vector3, InputVisitor) ->
+    'physics/physicsvisitor'
+], (World, Floor, Camera, Wall, ViewVisitor, Random, queueTask, PointerLock, Vector3, InputVisitor, PhysicsVisitor) ->
     class Game
         constructor: ->
             self = @
@@ -19,6 +20,7 @@ define [
             @world.add @camera
             @viewVisitor = new ViewVisitor @world
             @inputVisitor = new InputVisitor document
+            @physicsVisitor = new PhysicsVisitor
 
             @_placeWalls()
 
@@ -61,4 +63,5 @@ define [
 
         tickPhysics: ->
             @world.visit @inputVisitor
+            @world.visit @physicsVisitor
 
