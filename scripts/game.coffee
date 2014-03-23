@@ -11,6 +11,7 @@ define [
 ], (World, Floor, Camera, Wall, ViewVisitor, Random, queueTask, PointerLock, KeyboardInput) ->
     class Game
         constructor: ->
+            self = @
             @keyboard = new KeyboardInput document
             @world = new World()
             @world.add new Floor 10, 10
@@ -20,7 +21,6 @@ define [
             
             @_placeWalls()
             
-            self = @
             canvas = document.getElementsByTagName('canvas')[0]
             canvas.addEventListener 'click', () ->
                 pointerLock = new PointerLock canvas, () ->
@@ -29,6 +29,10 @@ define [
                     deltaY = event.movementY / 100
                     self.camera.yaw += deltaX
                     self.camera.pitch += deltaY
+            
+            resize = (event) ->
+                self.viewVisitor.handleResize event
+            window.addEventListener 'resize', resize
         
         _placeWalls: ->
             random = new Random()
@@ -42,7 +46,7 @@ define [
                     @world.add new Wall x, 0.5, z, random.randomInt 0xffffff
                     z += 1
                 x += 1
-
+        
         launchDrawLoop: ->
             self = @
             tickPhysics = ->

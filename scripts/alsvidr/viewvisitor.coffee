@@ -2,10 +2,9 @@ define ["three"], (THREE) ->
     class ViewVisitor
         constructor: (@world) ->
             @scene = scene = new THREE.Scene()
-            ratio = window.innerWidth / window.innerHeight
-            @camera = camera = new THREE.PerspectiveCamera 75, ratio, 0.1, 1000
+            @camera = camera = new THREE.PerspectiveCamera 75, 1, 0.1, 1000
             @renderer = renderer = new THREE.WebGLRenderer()
-            renderer.setSize window.innerWidth, window.innerHeight
+            @handleResize()
             document.body.appendChild renderer.domElement
             @viewObjects = {}
             
@@ -21,7 +20,12 @@ define ["three"], (THREE) ->
 
         draw: ->
             @renderer.render @scene, @camera
-
+        
+        handleResize: (event) ->
+            @camera.aspect = window.innerWidth / window.innerHeight
+            @camera.updateProjectionMatrix()
+            @renderer.setSize window.innerWidth, window.innerHeight
+        
         visitFloor: (floor) ->
             if @viewObjects[floor.object_id]?
                 return
