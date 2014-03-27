@@ -54,6 +54,23 @@ define ["three"], (THREE) ->
             @viewObjects[wall.object_id] = mesh
             @scene.add mesh
 
+        visitPanel: (panel) ->
+            if @viewObjects[panel.object_id]?
+                return
+            geometry = new THREE.PlaneGeometry 1, panel.height
+            material = new THREE.MeshLambertMaterial {
+                color: 0xFFFF00,
+                side: THREE.DoubleSide
+            }
+            mesh = new THREE.Mesh geometry, material
+            delta = panel.end.clone().sub panel.start
+            mesh.scale.x = delta.length()
+            mesh.rotation.y = - Math.atan2 delta.y, delta.x
+            midpoint = panel.start.clone().lerp panel.end, 0.5
+            mesh.position.set midpoint.x, panel.height / 2, midpoint.y
+            @viewObjects[panel.object_id] = mesh
+            @scene.add mesh
+
         visitCamera: (camera) ->
             if @viewObjects[camera.object_id]?
                 @_updateCamera camera, @viewObjects[camera.object_id]

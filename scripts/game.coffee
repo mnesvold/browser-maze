@@ -3,26 +3,30 @@ define [
     'yggdrasil/floor'
     'yggdrasil/camera'
     'yggdrasil/wall'
+    'yggdrasil/panel'
     'alsvidr/viewvisitor'
     'util/random'
     'util/queuetask'
     'util/pointerlock'
+    'util/vector2'
     'util/vector3'
     'input/inputvisitor'
     'physics/physicsvisitor'
-], (World, Floor, Camera, Wall, ViewVisitor, Random, queueTask, PointerLock, Vector3, InputVisitor, PhysicsVisitor) ->
+    'mazes/SquarePrimMaze'
+], (World, Floor, Camera, Wall, Panel, ViewVisitor, Random, queueTask, PointerLock, Vector2, Vector3, InputVisitor, PhysicsVisitor, Maze) ->
     class Game
         constructor: ->
             self = @
             @world = new World()
             @world.add new Floor 10, 10
-            @camera = new Camera new Vector3 5, 0.5, 5
+            @camera = new Camera new Vector3 0.5, 0.5, 0.5
             @world.add @camera
             @viewVisitor = new ViewVisitor @world
             @inputVisitor = new InputVisitor document
             @physicsVisitor = new PhysicsVisitor
 
-            @_placeWalls()
+            #@_placeWalls()
+            @_placeMaze()
 
             canvas = document.getElementsByTagName('canvas')[0]
             canvas.addEventListener 'click', () ->
@@ -49,6 +53,18 @@ define [
                     @world.add new Wall x, 0.5, z, random.randomInt 0xffffff
                     z += 1
                 x += 1
+
+        _placeMaze: ->
+            unit = 1
+            size = new Vector2 10, 10
+            random = new Random()
+            maze = new Maze unit, size, random
+            for boundary in maze.boundaries
+                for i in [1...boundary.length]
+                    start = boundary[i - 1]
+                    end = boundary[i]
+                    panel = new Panel 1, start, end
+                    @world.add panel
 
         launchDrawLoop: ->
             self = @

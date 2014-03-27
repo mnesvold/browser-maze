@@ -50,5 +50,7 @@ define ['util/vector3'], (Vector3) ->
                 max: max
             @obstacles.push obstacle
 
+        visitPanel: (panel) ->
+
         visitFloor: (floor) ->
 
