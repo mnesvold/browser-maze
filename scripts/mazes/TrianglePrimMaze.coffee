@@ -1,7 +1,7 @@
 define ['util/vector2'], (Vector2) ->
     class Node
         nextComponent = 0
-        
+
         constructor: (@coord) ->
             @edges = []
             @component = nextComponent
@@ -12,7 +12,7 @@ define ['util/vector2'], (Vector2) ->
             for node in @nodes
                 node.edges.push this
 
-    class SquarePrimMaze
+    class TrianglePrimMaze
         constructor: (@unit, size, @random) ->
             upsilon = @unit
             upsilonOverTwo = upsilon * 0.5
@@ -52,7 +52,7 @@ define ['util/vector2'], (Vector2) ->
                     new Vector2 west, north
                     new Vector2 east, north
                 ]
-                
+
                 # South wall
                 south = size.y * upsilonRootThreeOverTwo
                 if (size.y % 2) != 0
@@ -62,7 +62,7 @@ define ['util/vector2'], (Vector2) ->
                     new Vector2 west, south
                     new Vector2 east, south
                 ]
-                
+
                 makeSideWall = (x, y, dx, dy, yMax) ->
                     wall = []
                     while y <= yMax
@@ -74,10 +74,10 @@ define ['util/vector2'], (Vector2) ->
                         y += dy
                         dx *= -1
                     wall
-                
+
                 # West wall
                 boundaries.push makeSideWall 1, 0, -1, 1, size.y
-                
+
                 # East wall
                 dx = 1
                 if (size.x % 2) == 0
@@ -86,7 +86,7 @@ define ['util/vector2'], (Vector2) ->
                 boundaries.push makeSideWall x, 0, dx, 1, size.y
 
             # Generate nodes
-            
+
             xCoords = (x for x in [0...size.x])
             yCoords = (y for y in [0...size.y])
             nodes = []
@@ -99,7 +99,7 @@ define ['util/vector2'], (Vector2) ->
                 nodes[index]
 
             # Generate edges
- 
+
             edges = []
 
             isDelta = (x, y) ->
@@ -110,12 +110,12 @@ define ['util/vector2'], (Vector2) ->
                 for y in yCoords
                     start = nodeAt x - 1, y
                     end = nodeAt x, y
-                    
+
                     north = y * upsilonRootThreeOverTwo
                     south = (y + 1) * upsilonRootThreeOverTwo
                     west = x * upsilonOverTwo
                     east = (x + 1) * upsilonOverTwo
-                    
+
                     delta = isDelta x, y
                     if delta
                         westY = south
@@ -131,7 +131,7 @@ define ['util/vector2'], (Vector2) ->
                     edges.push new Edge boundary, start, end
 
             # North edges
-            
+
             for y in yCoords[1..]
                 for x in xCoords
                     if isDelta x, y
@@ -139,11 +139,11 @@ define ['util/vector2'], (Vector2) ->
 
                     start = nodeAt x, y - 1
                     end = nodeAt x, y
-                    
+
                     north = y * upsilonRootThreeOverTwo
                     west = x * upsilonOverTwo
                     east = (x + 2) * upsilonOverTwo
-                    
+
                     boundary = [
                         new Vector2 west, north
                         new Vector2 east, north
@@ -151,13 +151,13 @@ define ['util/vector2'], (Vector2) ->
                     edges.push new Edge boundary, start, end
 
             # Prune edges
-            
+
             if false
                 barriers = edges
             else
                 barriers = []
                 @random.shuffle edges
-                
+
                 for edge in edges
                     [start, end] = edge.nodes
                     if start.component == end.component
@@ -168,7 +168,7 @@ define ['util/vector2'], (Vector2) ->
                     for node in nodes
                         if node.component == oldComponent
                             node.component = newComponent
-            
+
             # Convert edges to boundaries
             for barrier in barriers
                 @boundaries.push barrier.boundary

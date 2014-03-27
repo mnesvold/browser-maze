@@ -17,22 +17,22 @@ require [
     drawMap = (maze, scale = 1, addToDocument = null) ->
         $canvas = $ '<div></div>'
         $canvas.addClass 'map-frame'
-        
+
         if addToDocument?
             addToDocument $canvas
-        
+
         width = maze.size.x * scale + 25
         height = maze.size.y * scale + 25
         #$canvas.width width
         #$canvas.height height
         paper = Raphael $canvas[0], width, height
-        
+
         bg = paper.rect 0, 0, width, height
         bg.attr {
             fill: '#CCCCCC'
             'stroke-width': 0
         }
-        
+
         pathString = ''
         for boundary in maze.boundaries
             v = boundary[0]
@@ -46,15 +46,15 @@ require [
         path.attr {
             'stroke-width': 2
         }
-        
+
         $canvas
 
     $(document).ready ->
         $gallery = $ '#gallery'
-        
+
         unit = 20
         size = new Vector2 15, 15
-        
+
         for i in [0..10]
             do (i) ->
                 random = new Random()

@@ -1,7 +1,7 @@
 define ['util/vector2'], (Vector2) ->
     class Node
         nextComponent = 0
-        
+
         constructor: (@coord) ->
             @edges = []
             @component = nextComponent
@@ -25,7 +25,7 @@ define ['util/vector2'], (Vector2) ->
             @boundaries = [ segments ]
 
             # Generate nodes
-            
+
             xCoords = (x for x in [0...size.x])
             yCoords = (y for y in [0...size.y])
             nodes = []
@@ -38,7 +38,7 @@ define ['util/vector2'], (Vector2) ->
                 nodes[index]
 
             # Generate edges
- 
+
             edges = []
 
             for x in xCoords[1..]
@@ -60,12 +60,12 @@ define ['util/vector2'], (Vector2) ->
                         new Vector2(x + 1, y).multiplyScalar @unit
                     ]
                     edges.push new Edge boundary, start, end
-            
+
             # Prune edges
-            
+
             barriers = []
             @random.shuffle edges
-            
+
             for edge in edges
                 [start, end] = edge.nodes
                 if start.component == end.component
@@ -76,7 +76,7 @@ define ['util/vector2'], (Vector2) ->
                 for node in nodes
                     if node.component == oldComponent
                         node.component = newComponent
-            
+
             # Convert edges to boundaries
             for barrier in barriers
                 @boundaries.push barrier.boundary
