@@ -4,6 +4,7 @@ define [
     'yggdrasil/camera'
     'yggdrasil/wall'
     'yggdrasil/panel'
+    'yggdrasil/marker'
     'alsvidr/viewvisitor'
     'util/random'
     'util/queuetask'
@@ -13,7 +14,7 @@ define [
     'input/inputvisitor'
     'physics/physicsvisitor'
     'mazes/SquarePrimMaze'
-], (World, Floor, Camera, Wall, Panel, ViewVisitor, Random, queueTask, PointerLock, Vector2, Vector3, InputVisitor, PhysicsVisitor, Maze) ->
+], (World, Floor, Camera, Wall, Panel, Marker, ViewVisitor, Random, queueTask, PointerLock, Vector2, Vector3, InputVisitor, PhysicsVisitor, Maze) ->
     class Game
         constructor: ->
             self = @
@@ -27,6 +28,9 @@ define [
 
             #@_placeWalls()
             @_placeMaze()
+
+            @world.add new Marker new Vector2(0.5, 0.5), 0.1, 0x000000
+            @world.add new Marker new Vector2(9.5, 9.5), 0.1, 0xffffff
 
             canvas = document.getElementsByTagName('canvas')[0]
             canvas.addEventListener 'click', () ->

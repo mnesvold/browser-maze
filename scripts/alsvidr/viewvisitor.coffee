@@ -10,9 +10,15 @@ define ["three"], (THREE) ->
 
             scene.add new THREE.AxisHelper 25
 
-            light = new THREE.PointLight 0xffffff, 1, 100
-            light.position = new THREE.Vector3 5, 10, 5
-            scene.add light
+            makeLight = (x, z, color) ->
+                light = new THREE.PointLight color, 1, 100
+                light.position.set x, 10, z
+                light
+
+            scene.add makeLight 0.5, 0.5, 0xffffff
+            scene.add makeLight 0.5, 9.5, 0xff0000
+            scene.add makeLight 9.5, 9.5, 0x00ff00
+            scene.add makeLight 9.5, 0.5, 0x0000ff
 
         update: ->
             @world.visit this
@@ -59,7 +65,7 @@ define ["three"], (THREE) ->
                 return
             geometry = new THREE.PlaneGeometry 1, panel.height
             material = new THREE.MeshLambertMaterial {
-                color: 0xFFFF00,
+                color: 0xffffff,
                 side: THREE.DoubleSide
             }
             mesh = new THREE.Mesh geometry, material
@@ -69,6 +75,20 @@ define ["three"], (THREE) ->
             midpoint = panel.start.clone().lerp panel.end, 0.5
             mesh.position.set midpoint.x, panel.height / 2, midpoint.y
             @viewObjects[panel.object_id] = mesh
+            @scene.add mesh
+
+        visitMarker: (marker) ->
+            if @viewObjects[marker.object_id]?
+                return
+            geometry = new THREE.CylinderGeometry 0.4, 0.4, marker.height, 20, 20
+            material = new THREE.MeshLambertMaterial { color: marker.color }
+            mesh = new THREE.Mesh geometry, material
+            mesh.position.set(
+                marker.position.x,
+                marker.height / 2,
+                marker.position.y
+            )
+            @viewObjects[marker.object_id] = mesh
             @scene.add mesh
 
         visitCamera: (camera) ->

@@ -54,3 +54,5 @@ define ['util/vector3'], (Vector3) ->
 
         visitFloor: (floor) ->
 
+        visitMarker: (marker) ->
+

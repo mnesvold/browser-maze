@@ -20,4 +20,5 @@ define ['input/keyboard'], (KeyboardInput) ->
         visitFloor: ->
         visitWall: ->
         visitPanel: ->
+        visitMarker: ->
 
