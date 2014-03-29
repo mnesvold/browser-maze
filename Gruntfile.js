@@ -82,6 +82,20 @@ module.exports = function(grunt) {
                     mainConfigFile: 'build/scripts/config.js'
                 }
             }
+        },
+        watch: {
+            coffee: {
+                files: ['src/scripts/**.coffee'],
+                tasks: ['coffee']
+            },
+            raw_js: {
+                files: ['src/scripts/**.js'],
+                tasks: ['copy:raw_js']
+            },
+            html: {
+                files: ['src/**.html'],
+                tasks: ['copy:html_dev']
+            }
         }
     });
 
@@ -89,6 +103,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('default', ['build']);
     grunt.registerTask('build', ['copy:html_dev', 'copy:raw_js', 'coffee']);
