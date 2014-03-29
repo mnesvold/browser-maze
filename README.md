@@ -14,15 +14,16 @@ Hack on It!
 
 ```bash
 # tl;dr
-$ git clone https://github.com/mnesvold/browser-maze.git
-$ cd browser-maze
-$ <edit files>
-$ PATH=$PATH:./node_modules/.bin
-$ grunt
-$ <open build/maze.html in your favorite browser>
+$ git clone https://github.com/mnesvold/browser-maze.git # Get the code
+$ cd browser-maze                                        # Get in the code
+$ npm install                                            # Install dependencies
+$ PATH=$PATH:./node_modules/.bin                         # Get the dependencies on the path
+$ <edit files>                                           # Hack!
+$ grunt                                                  # Build
+$ <open build/maze.html in your favorite browser>        # Play
 ```
 
-Most of the source is written in [CoffeeScript](http://coffeescript.org/), using a healthy portion of [Grunt](http://gruntjs.com/) for compilation and [RequireJS](http://requirejs.org) for dependency management. All the necessary Node packages (including Grunt itself) are checked in under `node_modules`, so as long as you have Node installed, put `node_modules/.bin` on your path for the session and run `grunt` to kick things off.
+Most of the source is written in [CoffeeScript](http://coffeescript.org/), using a healthy portion of [Grunt](http://gruntjs.com/) for compilation and [RequireJS](http://requirejs.org) for inter-module dependency management. Run `npm install` to get the build dependencies, put `node_modules/.bin` on your path for the session, and run `grunt` to kick things off.
 
 ### Development Builds
 
