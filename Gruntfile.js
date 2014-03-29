@@ -33,6 +33,10 @@ module.exports = function(grunt) {
                 ext: '.js'
             }
         },
+        coffeelint: {
+            app: ['src/**/*.coffee'],
+            options: grunt.file.readJSON('coffeelint.json')
+        },
         copy: {
             html_dev: {
                 expand: true,
@@ -101,11 +105,23 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-coffee');
+    grunt.loadNpmTasks('grunt-coffeelint');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('default', ['build']);
-    grunt.registerTask('build', ['copy:html_dev', 'copy:raw_js', 'coffee']);
-    grunt.registerTask('dist', ['build', 'requirejs', 'copy:html_dist', 'copy:dist_require']);
+    grunt.registerTask('lint', ['coffeelint']);
+    grunt.registerTask('build', [
+        'coffee',
+        'lint',
+        'copy:html_dev',
+        'copy:raw_js',
+    ]);
+    grunt.registerTask('dist', [
+        'build',
+        'requirejs',
+        'copy:html_dist',
+        'copy:dist_require'
+    ]);
 }

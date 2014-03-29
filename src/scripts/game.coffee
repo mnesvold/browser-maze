@@ -1,20 +1,20 @@
-define [
-    'yggdrasil/world'
-    'yggdrasil/floor'
-    'yggdrasil/camera'
-    'yggdrasil/wall'
-    'yggdrasil/panel'
-    'yggdrasil/marker'
-    'alsvidr/viewvisitor'
-    'util/random'
-    'util/queuetask'
-    'util/pointerlock'
-    'util/vector2'
-    'util/vector3'
-    'input/inputvisitor'
-    'physics/physicsvisitor'
-    'mazes/SquarePrimMaze'
-], (World, Floor, Camera, Wall, Panel, Marker, ViewVisitor, Random, queueTask, PointerLock, Vector2, Vector3, InputVisitor, PhysicsVisitor, Maze) ->
+define (require, exports, module) ->
+    World = require 'yggdrasil/world'
+    Floor = require 'yggdrasil/floor'
+    Camera = require 'yggdrasil/camera'
+    Wall = require 'yggdrasil/wall'
+    Panel = require 'yggdrasil/panel'
+    Marker = require 'yggdrasil/marker'
+    ViewVisitor = require 'alsvidr/viewvisitor'
+    Random = require 'util/random'
+    queueTask = require 'util/queuetask'
+    PointerLock = require 'util/pointerlock'
+    Vector2 = require 'util/vector2'
+    Vector3 = require 'util/vector3'
+    InputVisitor = require 'input/inputvisitor'
+    PhysicsVisitor = require 'physics/physicsvisitor'
+    Maze = require 'mazes/SquarePrimMaze'
+
     class Game
         constructor: ->
             self = @

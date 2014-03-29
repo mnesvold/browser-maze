@@ -80,7 +80,11 @@ define ["three"], (THREE) ->
         visitMarker: (marker) ->
             if @viewObjects[marker.object_id]?
                 return
-            geometry = new THREE.CylinderGeometry 0.4, 0.4, marker.height, 20, 20
+            geometry = new THREE.CylinderGeometry(
+                0.4, 0.4
+                marker.height
+                20, 20
+            )
             material = new THREE.MeshLambertMaterial { color: marker.color }
             mesh = new THREE.Mesh geometry, material
             mesh.position.set(

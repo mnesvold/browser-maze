@@ -1,13 +1,13 @@
 define [], () ->
     _getPointerLockRequestFunction = (element) ->
         element.requestPointerLock ||
-        element.mozRequestPointerLock ||
-        element.webkitRequestPointerLock
+            element.mozRequestPointerLock ||
+            element.webkitRequestPointerLock
 
     _getPointerLockElement = () ->
         document.pointerLockElement ||
-        document.mozPointerLockElement ||
-        document.webkitPointerLockElement
+            document.mozPointerLockElement ||
+            document.webkitPointerLockElement
 
     class PointerLock
         constructor: (@element, @lockCallback) ->
@@ -18,9 +18,11 @@ define [], () ->
                 self._fireMoveCallbacks event
             @_lockChangeCallback = (event) ->
                 self._handleLockChange event
-            document.addEventListener 'pointerlockchange', @_lockChangeCallback
-            document.addEventListener 'mozpointerlockchange', @_lockChangeCallback
-            document.addEventListener 'webkitpointerlockchange', @_lockChangeCallback
+            @_addVendorListeners(
+                document
+                'pointerlockchange'
+                @_lockChangeCallback
+            )
             request = _getPointerLockRequestFunction @element
             request.call @element
 
@@ -42,9 +44,11 @@ define [], () ->
 
         _handlePointerLockReleased: (event) ->
             document.removeEventListener 'mousemove', @_moveCallback
-            document.removeEventListener 'pointerlockchange', @_lockChangeCallback
-            document.removeEventListener 'mozpointerlockchange', @_lockChangeCallback
-            document.removeEventListener 'webkitpointerlockchange', @_lockChangeCallback
+            @_removeVendorListeners(
+                document
+                'pointerlockchange'
+                @_lockChangeCallback
+            )
             @_fireUnlockCallbacks()
 
         _fireMoveCallbacks: (event) ->
@@ -52,8 +56,14 @@ define [], () ->
             @_fireCallbacks @moveCallbacks, event
 
         _polyfillMoveEvent: (event) ->
-            event.movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0
-            event.movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0
+            event.movementX = event.movementX ||
+                event.mozMovementX ||
+                event.webkitMovementX ||
+                0
+            event.movementY = event.movementY ||
+                event.mozMovementY ||
+                event.webkitMovementY ||
+                0
 
         _fireUnlockCallbacks: (event) ->
             @_fireCallbacks @unlockCallbacks, event
@@ -61,4 +71,14 @@ define [], () ->
         _fireCallbacks: (callbacks, event) ->
             for callback in callbacks
                 callback event
+
+        _addVendorListeners: (object, eventName, listener) ->
+            object.addEventListener eventName, listener
+            object.addEventListener 'moz' + eventName, listener
+            object.addEventListener 'webkit' + eventName, listener
+
+        _removeVendorListeners: (object, eventName, listener) ->
+            object.removeEventListener eventName, listener
+            object.removeEventListener 'moz' + eventName, listener
+            object.removeEventListener 'webkit' + eventName, listener
 
