@@ -24,6 +24,17 @@ define [], () ->
         STRAFE_LEFT: k.A
         STRAFE_RIGHT: k.E
 
+    combineSemantics = (semantics...) ->
+        merge = {}
+        for source in semantics
+            for key of source
+                property = source[key]
+                mergedProperty = merge[key] ? []
+                if mergedProperty.indexOf(property) < 0
+                    mergedProperty.push property
+                merge[key] = mergedProperty
+        merge
+
     class KeyboardInput
         constructor: (eventRoot) ->
             @active = active = {}
@@ -36,9 +47,14 @@ define [], () ->
                     console.log " UP  #{event.keyCode}"
                 delete active[event.keyCode]
 
-        isActive: (keyCode) ->
-            return @active[keyCode]
+        isActive: (keyCodes) ->
+            if not Array.isArray(keyCodes)
+                keyCode = [keyCodes]
+            for keyCode in keyCodes
+                if @active[keyCode]
+                    return true
+            false
 
         @constants = KeyboardConstants
-        @semantic = QWERTYSemantics
+        @semantic = combineSemantics QWERTYSemantics, DvorakSemantics
 
