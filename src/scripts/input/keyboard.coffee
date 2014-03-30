@@ -40,5 +40,5 @@ define [], () ->
             return @active[keyCode]
 
         @constants = KeyboardConstants
-        @semantic = DvorakSemantics
+        @semantic = QWERTYSemantics
 
