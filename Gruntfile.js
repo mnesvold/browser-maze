@@ -38,6 +38,12 @@ module.exports = function(grunt) {
             options: grunt.file.readJSON('coffeelint.json')
         },
         copy: {
+            bower: {
+                expand: true,
+                cwd: 'bower_components',
+                src: ['*'],
+                dest: 'build/scripts'
+            },
             html_dev: {
                 expand: true,
                 cwd: 'src',
@@ -116,6 +122,7 @@ module.exports = function(grunt) {
         'coffee',
         'lint',
         'copy:html_dev',
+        'copy:bower',
         'copy:raw_js',
     ]);
     grunt.registerTask('dist', [

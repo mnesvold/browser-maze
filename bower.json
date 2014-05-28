@@ -1,0 +1,17 @@
+{
+  "name": "browser-maze",
+  "version": "0.0.1-epsilon",
+  "homepage": "https://github.com/mnesvold/browser-maze",
+  "authors": [
+    "Michael Nesvold <mdnesvold@gmail.com>"
+  ],
+  "description": "A nifty 3D maze, right in your browser!",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "raphael": "~2.1.2",
+    "requirejs": "~2.1.13",
+    "threejs": "*"
+  }
+}
