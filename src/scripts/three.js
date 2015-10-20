@@ -1,1 +1,0 @@
-../../bower_components/threejs/build/three.min.js
