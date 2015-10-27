@@ -17,10 +17,7 @@ module.exports = function(grunt) {
             'version': '0.1.0'
         },
         clean: {
-            all: [
-                'build/',
-                'dist/'
-            ]
+            all: ['build/']
         },
         coffee: {
             options: {
@@ -47,45 +44,12 @@ module.exports = function(grunt) {
                     process: conditional_html(['DEV'])
                 }
             },
-            html_dist: {
-                expand: true,
-                cwd: 'src',
-                src: ['*.html'],
-                dest: 'dist/',
-                options: {
-                    process: conditional_html(['DIST'])
-                }
-            },
             raw_js: {
                 expand: true,
                 cwd: 'src',
                 src: ['**/*.js'],
                 dest: 'build/'
             },
-            dist_require: {
-                src: ['src/scripts/require.js'],
-                dest: 'dist/require.js'
-            }
-        },
-        requirejs: {
-            compile_main: {
-                options: {
-                    baseUrl: 'build/scripts',
-                    name: 'app',
-                    out: 'dist/maze.js',
-                    optimize: 'uglify2',
-                    mainConfigFile: 'build/scripts/config.js'
-                }
-            },
-            compile_mapper: {
-                options: {
-                    baseUrl: 'build/scripts',
-                    name: 'app-map',
-                    out: 'dist/map.js',
-                    optimize: 'uglify2',
-                    mainConfigFile: 'build/scripts/config.js'
-                }
-            }
         },
         watch: {
             coffee: {
@@ -107,7 +71,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-coffeelint');
     grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('default', ['build']);
@@ -117,11 +80,5 @@ module.exports = function(grunt) {
         'lint',
         'copy:html_dev',
         'copy:raw_js',
-    ]);
-    grunt.registerTask('dist', [
-        'build',
-        'requirejs',
-        'copy:html_dist',
-        'copy:dist_require'
     ]);
 }
