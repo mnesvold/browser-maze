@@ -54,15 +54,6 @@ module.exports = class PhysicsVisitor
     visitCamera: (camera) ->
         @mobiles.push camera
 
-    visitWall: (wall) ->
-        pos = new Vector3 wall.x_pos, wall.y_pos, wall.z_pos
-        min = pos.clone().sub new Vector3(.5, .5, .5)
-        max = pos.add new Vector3(.5, .5, .5)
-        obstacle =
-            min: min
-            max: max
-        @obstacles.push obstacle
-
     visitPanel: (panel) ->
 
     visitFloor: (floor) ->

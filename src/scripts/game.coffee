@@ -1,7 +1,6 @@
 World = require './yggdrasil/world'
 Floor = require './yggdrasil/floor'
 Camera = require './yggdrasil/camera'
-Wall = require './yggdrasil/wall'
 Panel = require './yggdrasil/panel'
 Marker = require './yggdrasil/marker'
 ViewVisitor = require './alsvidr/viewvisitor'
@@ -25,7 +24,6 @@ module.exports = class Game
         @inputVisitor = new InputVisitor document
         @physicsVisitor = new PhysicsVisitor
 
-        #@_placeWalls()
         @_placeMaze()
 
         @world.add new Marker new Vector2(0.5, 0.5), 0.1, 0x000000
@@ -43,19 +41,6 @@ module.exports = class Game
         resize = (event) ->
             self.viewVisitor.handleResize event
         window.addEventListener 'resize', resize
-
-    _placeWalls: ->
-        random = new Random()
-        x = 0
-        while x < 10
-            z = 0
-            while z < 10
-                if (0 < x < 9) and (0 < z < 9)
-                    z += 1
-                    continue
-                @world.add new Wall x, 0.5, z, random.randomInt 0xffffff
-                z += 1
-            x += 1
 
     _placeMaze: ->
         unit = 1

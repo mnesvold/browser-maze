@@ -47,20 +47,6 @@ module.exports = class ViewVisitor
         @viewObjects[floor.object_id] = mesh
         @scene.add mesh
 
-    visitWall: (wall) ->
-        if @viewObjects[wall.object_id]?
-            return
-        geometry = new THREE.CubeGeometry 1, 1, 1
-        material = new THREE.MeshBasicMaterial { color: wall.color_hex }
-        mesh = new THREE.Mesh geometry, material
-        mesh.position = new THREE.Vector3(
-            wall.x_pos
-            wall.y_pos
-            wall.z_pos
-        )
-        @viewObjects[wall.object_id] = mesh
-        @scene.add mesh
-
     visitPanel: (panel) ->
         if @viewObjects[panel.object_id]?
             return

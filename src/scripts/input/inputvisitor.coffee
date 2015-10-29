@@ -19,6 +19,5 @@ module.exports = class InputVisitor
             camera.moveRight()
 
     visitFloor: ->
-    visitWall: ->
     visitPanel: ->
     visitMarker: ->
