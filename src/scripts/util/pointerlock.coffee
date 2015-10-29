@@ -55,13 +55,13 @@ module.exports = class PointerLock
         @_fireCallbacks @moveCallbacks, event
 
     _polyfillMoveEvent: (event) ->
-        event.movementX = event.movementX ||
-            event.mozMovementX ||
-            event.webkitMovementX ||
+        event.movementX ?=
+            event.mozMovementX ?
+            event.webkitMovementX ?
             0
-        event.movementY = event.movementY ||
-            event.mozMovementY ||
-            event.webkitMovementY ||
+        event.movementY ?=
+            event.mozMovementY ?
+            event.webkitMovementY ?
             0
 
     _fireUnlockCallbacks: (event) ->
