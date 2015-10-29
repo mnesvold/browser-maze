@@ -7,7 +7,7 @@ A procedurally-generated, 3D maze, right in your browser.
 Try It!
 -------
 
-To give it a try, download `maze.html`, `maze.js`, and `require.js` from the `dist` folder onto your local machine and open `maze.html` from there into your local browser.
+Check out https://mnesvold.github.io/browser-maze/.
 
 Hack on It!
 -----------
@@ -17,26 +17,16 @@ Hack on It!
 $ git clone https://github.com/mnesvold/browser-maze.git # Get the code
 $ cd browser-maze                                        # Get in the code
 $ npm install                                            # Install dependencies
-$ PATH=$PATH:./node_modules/.bin                         # Get the dependencies on the path
 $ <edit files>                                           # Hack!
-$ grunt                                                  # Build
+$ ./compile                                              # Build
 $ <open build/maze.html in your favorite browser>        # Play
 ```
 
-Most of the source is written in [CoffeeScript](http://coffeescript.org/), using a healthy portion of [Grunt](http://gruntjs.com/) for compilation and [RequireJS](http://requirejs.org) for inter-module dependency management. Run `npm install` to get the build dependencies, put `node_modules/.bin` on your path for the session, and run `grunt` to kick things off.
+The source is written in [CoffeeScript](http://coffeescript.org/), using [Browserify](http://browserify.org/) + [Coffeeify](https://www.npmjs.com/package/coffeeify) for dependency management. Run `npm install` to get the build and runtime dependencies, then run `./compile` to kick things off. Browser Maze uses no XHRs, so you can open `build/maze.html` over the `file://` scheme without bothering with static file servers.
 
-### Development Builds
-
-The default `grunt` task generates a `build` folder that compiles everything in `src`, but leaves the RequireJS modules as they are. For convenience's sake, there's also a `grunt watch` task that will keep `build` up to date as you change files in `src`.
-
-### Distribution Builds
-
-Run `grunt dist` to generate a `dist` folder with the JavaScript combined and minified.
-
-Dependencies
+Runtime Dependencies
 ------------
 
-* [Three.js](http://threejs.org/)
-* [Raphael.js](http://raphaeljs.com/), for drawing the maze maps
-* [Require.js](http://requirejs.org/), including its optimizer for `dist` builds
-
+* [JQuery](https://jquery.com/) for minor DOM interactions
+* [Three.js](http://threejs.org/) for the 3D graphics
+* [Raphael.js](http://raphaeljs.com/) for drawing the maze maps
