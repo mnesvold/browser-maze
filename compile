@@ -4,15 +4,22 @@ BIN=./node_modules/.bin
 SRC=./src
 BUILD=./build
 
+log() {
+    echo "$1"
+}
+
 clean() {
+    log 'Removing build directory'
     rm -rf $BUILD
 }
 
 lint() {
+    log 'Linting CoffeeScript'
     $BIN/coffeelint --quiet `find $SRC -regex '.*\.coffee'`
 }
 
 compile() {
+    log 'Compiling and bundling CoffeeScript'
     mkdir -p $BUILD
     $BIN/browserify $SRC/scripts/app.coffee \
         -t coffeeify --extension=".coffee" \
@@ -20,6 +27,7 @@ compile() {
 }
 
 copy_static() {
+    log 'Copying static files'
     mkdir -p $BUILD
     cp $SRC/map.html $SRC/maze.html $BUILD
 }
