@@ -1,0 +1,45 @@
+#!/bin/bash
+
+BIN=./node_modules/.bin
+SRC=./src
+BUILD=./build
+
+clean() {
+    rm -rf $BUILD
+}
+
+lint() {
+    $BIN/coffeelint --quiet `find $SRC -regex '.*\.coffee'`
+}
+
+compile() {
+    mkdir -p $BUILD
+    $BIN/browserify $SRC/scripts/app.coffee \
+        -t coffeeify --extension=".coffee" \
+        -o $BUILD/maze.js
+}
+
+copy_static() {
+    mkdir -p $BUILD
+    cp $SRC/map.html $SRC/maze.html $BUILD
+}
+
+case "$1" in
+    clean)
+        clean
+        ;;
+    lint)
+        lint
+        ;;
+    compile)
+        compile
+        ;;
+    "")
+        lint
+        compile
+        copy_static
+        ;;
+    *)
+        echo "Usage: $0 (compile|lint|clean)"
+        exit 1
+esac

@@ -1,8 +1,8 @@
-define ['three'], (THREE) ->
-    Vector2 = THREE.Vector2
+THREE = require 'three.js'
 
-    Vector2.toTHREEVector = ->
-        this
+Vector2 = THREE.Vector2
 
-    return Vector2
+Vector2.toTHREEVector = ->
+    this
 
+module.exports = Vector2

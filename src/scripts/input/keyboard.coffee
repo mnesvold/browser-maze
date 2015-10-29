@@ -1,74 +1,72 @@
-define [], () ->
-    log_events = false
+log_events = false
 
-    KeyboardConstants = k =
-        UP: 38
-        DOWN: 40
-        LEFT: 37
-        RIGHT: 39
-        COMMA: 188
-        A: 65
-        D: 68
-        E: 69
-        O: 79
-        S: 83
-        W: 87
+KeyboardConstants = k =
+    UP: 38
+    DOWN: 40
+    LEFT: 37
+    RIGHT: 39
+    COMMA: 188
+    A: 65
+    D: 68
+    E: 69
+    O: 79
+    S: 83
+    W: 87
 
-    QWERTYSemantics =
-        FORWARD: k.W
-        BACKWARD: k.S
-        STRAFE_LEFT: k.A
-        STRAFE_RIGHT: k.D
+QWERTYSemantics =
+    FORWARD: k.W
+    BACKWARD: k.S
+    STRAFE_LEFT: k.A
+    STRAFE_RIGHT: k.D
 
-    DvorakSemantics =
-        FORWARD: k.COMMA
-        BACKWARD: k.O
-        STRAFE_LEFT: k.A
-        STRAFE_RIGHT: k.E
+DvorakSemantics =
+    FORWARD: k.COMMA
+    BACKWARD: k.O
+    STRAFE_LEFT: k.A
+    STRAFE_RIGHT: k.E
 
-    ArrowSemantics =
-        FORWARD: k.UP
-        BACKWARD: k.DOWN
-        STRAFE_LEFT: k.LEFT
-        STRAFE_RIGHT: k.RIGHT
+ArrowSemantics =
+    FORWARD: k.UP
+    BACKWARD: k.DOWN
+    STRAFE_LEFT: k.LEFT
+    STRAFE_RIGHT: k.RIGHT
 
-    combineSemantics = (semantics...) ->
-        merge = {}
-        for source in semantics
-            for key of source
-                property = source[key]
-                mergedProperty = merge[key] ? []
-                if mergedProperty.indexOf(property) < 0
-                    mergedProperty.push property
-                merge[key] = mergedProperty
-        merge
+combineSemantics = (semantics...) ->
+    merge = {}
+    for source in semantics
+        for key of source
+            property = source[key]
+            mergedProperty = merge[key] ? []
+            if mergedProperty.indexOf(property) < 0
+                mergedProperty.push property
+            merge[key] = mergedProperty
+    merge
 
-    CombinedSemantics = combineSemantics(
-        ArrowSemantics
-        DvorakSemantics
-        QWERTYSemantics
-    )
+CombinedSemantics = combineSemantics(
+    ArrowSemantics
+    DvorakSemantics
+    QWERTYSemantics
+)
 
-    class KeyboardInput
-        constructor: (eventRoot) ->
-            @active = active = {}
-            eventRoot.addEventListener 'keydown', (event) ->
-                if log_events
-                    console.log "DOWN #{event.keyCode}"
-                active[event.keyCode] = true
-            eventRoot.addEventListener 'keyup', (event) ->
-                if log_events
-                    console.log " UP  #{event.keyCode}"
-                delete active[event.keyCode]
+module.exports = class KeyboardInput
+    constructor: (eventRoot) ->
+        @active = active = {}
+        eventRoot.addEventListener 'keydown', (event) ->
+            if log_events
+                console.log "DOWN #{event.keyCode}"
+            active[event.keyCode] = true
+        eventRoot.addEventListener 'keyup', (event) ->
+            if log_events
+                console.log " UP  #{event.keyCode}"
+            delete active[event.keyCode]
 
-        isActive: (keyCodes) ->
-            if not Array.isArray(keyCodes)
-                keyCode = [keyCodes]
-            for keyCode in keyCodes
-                if @active[keyCode]
-                    return true
-            false
+    isActive: (keyCodes) ->
+        if not Array.isArray(keyCodes)
+            keyCode = [keyCodes]
+        for keyCode in keyCodes
+            if @active[keyCode]
+                return true
+        false
 
-        @constants = KeyboardConstants
-        @semantic = CombinedSemantics
-
+    @constants = KeyboardConstants
+    @semantic = CombinedSemantics

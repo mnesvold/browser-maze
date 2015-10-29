@@ -1,4 +1,5 @@
-require ['jquery', 'game'], ($, Game) ->
-    $(document).ready ->
-        new Game().launchDrawLoop()
+$ = require 'jquery'
+Game = require './game'
 
+$(document).ready ->
+    new Game().launchDrawLoop()
