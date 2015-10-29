@@ -4,7 +4,7 @@ Vector3 = require '../util/vector3'
 module.exports = class Camera
     constructor: (@position, speedVector, yaw, pitch) ->
         @velocity = new Vector3 0, 0, 0
-        @speedVector = speedVector ? new Vector3 .04, 0, .04
+        @speedVector = speedVector ? new Vector3 1, 0, 1
         @yaw = yaw ? 0
         @pitch = pitch ? 0
 
